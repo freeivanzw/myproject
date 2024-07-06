@@ -1,0 +1,22 @@
+html {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.content {
+    flex: 1 1 auto
+}
+
+.feature {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 4rem;
+    width: 4rem;
+    font-size: 2rem;
+}
