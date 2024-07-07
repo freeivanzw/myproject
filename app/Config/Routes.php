@@ -9,7 +9,12 @@ use CodeIgniter\Router\RouteCollection;
 $routes->group('admin', static function ($routes) {
     $routes->get('/', 'Admin\Home\HomeController::index');
 
-    $routes->get('login', 'Admin\Login\LoginController::index');
+    $routes->group('auth', static function ($routes) {
+        $routes->get('login', 'Admin\Auth\AuthController::login');
+        $routes->post('login', 'Admin\Auth\AuthController::enter');
+
+        $routes->post('register', 'Admin\Auth\AuthController::register');
+    });
 });
 
 $routes->get('/', 'Front\Home\Home::index');

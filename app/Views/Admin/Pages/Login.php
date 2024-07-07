@@ -9,13 +9,13 @@
         </div>
         <div class="row gx-5 justify-content-center">
             <div class="col-lg-6">
-                <form id="contactForm">
+                <form action="<?=base_url('admin/auth/login');?>" method="post" id="contactForm">
                     <div class="form-floating mb-3">
-                        <input id="login" type="text" name="login" class="form-control" placeholder="Enter your login...">
+                        <input id="login" type="text" name="login" class="form-control<?= (session()->has('errors')) ? ' is-invalid' : '' ;?>" value="<?=old('login');?>" placeholder="Enter your login...">
                         <label for="login">Login</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input id="password" type="password" name="password" class="form-control" placeholder="*********">
+                        <input id="password" type="password" name="password" class="form-control<?= (session()->has('errors')) ? ' is-invalid' : '' ;?>" placeholder="*********">
                         <label for="password">Password</label>
                     </div>
                     <div class="d-grid"><button class="btn btn-primary btn-lg" id="submitButton" type="submit">Увійти</button></div>
