@@ -8,6 +8,10 @@ class ProductsController extends FrontController
 {
     public function list () : string
     {
-        return view('Front/Pages/Products');
+        $data = [
+            'selectedPage' => 'products',
+        ];
+
+        return view('Front/Pages/Products', $data);
     }
 }

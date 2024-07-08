@@ -10,32 +10,16 @@
 <body>
     <div class="admin_wrapper container-lg mt-5 mb-5">
     <div class="sidebar d-flex flex-column flex-shrink-0 p-3">
-        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+        <a href="<?=base_url('admin');?>" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
             <span class="fs-4">Адмін панель</span>
         </a>
         <hr>
-        <ul class="nav nav-pills flex-column mb-auto">
-            <li class="nav-item">
-                <a href="#" class="nav-link active" aria-current="page">Home</a>
-            </li>
-            <li>
-                <a href="#" class="nav-link text-dark">Dashboard</a>
-            </li>
-            <li>
-                <a href="#" class="nav-link text-dark">Orders</a>
-            </li>
-            <li>
-                <a href="#" class="nav-link text-dark">Products</a>
-            </li>
-            <li>
-                <a href="#" class="nav-link text-dark">Customers</a>
-            </li>
-        </ul>
+        <?= $this->render('Admin/Components/Menu'); ?>
     </div>
 
         <!-- Контент -->
         <div class="content">
-            <?= $this->renderSection('content') ?>
+            <?= $this->renderSection('content'); ?>
         </div>
     </div>    
 

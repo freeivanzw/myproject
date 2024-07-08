@@ -8,6 +8,10 @@ class ContactsController extends FrontController
 {
     public function index() : string
     {
-        return view('Front/Pages/Contacts');
+        $data = [
+            'selectedPage' => 'contacts',
+        ];
+
+        return view('Front/Pages/Contacts', $data);
     }
 }

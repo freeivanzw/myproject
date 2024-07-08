@@ -5,16 +5,16 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('/'); ?>"><?= lang('App.mainPage'); ?></a>
+                    <a class="nav-link<?= $selectedPage === 'main' ? ' active' : ''; ?>" href="<?= base_url('/'); ?>"><?= lang('App.mainPage'); ?></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('products'); ?>"><?= lang('App.productsPage'); ?></a>
+                    <a class="nav-link<?= $selectedPage === 'products' ? ' active' : ''; ?>" href="<?= base_url('products'); ?>"><?= lang('App.productsPage'); ?></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('news'); ?>"><?= lang('App.newsPage'); ?></a>
+                    <a class="nav-link<?= $selectedPage === 'news' ? ' active' : ''; ?>" href="<?= base_url('news'); ?>"><?= lang('App.newsPage'); ?></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('contacts'); ?>"><?= lang('App.contactsPage'); ?></a>
+                    <a class="nav-link<?= $selectedPage === 'contacts' ? ' active' : ''; ?>" href="<?= base_url('contacts'); ?>"><?= lang('App.contactsPage'); ?></a>
                 </li>
             </ul>
         </div>

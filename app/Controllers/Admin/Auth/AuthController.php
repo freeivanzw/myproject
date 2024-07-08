@@ -29,7 +29,7 @@ class AuthController extends AdminController
             }
             
             $admin = $this->adminModel->where('login', $data['login'])->first();
-    
+
             if (!password_verify($data['password'], $admin['password_hash'])) {
                 throw new Exception();
             }
@@ -40,6 +40,13 @@ class AuthController extends AdminController
         } catch (Exception $err) {
             return redirect()->back()->with('errors', true)->withInput();
         }
+    }
+
+    public function logout()
+    {
+        $this->session->remove('admin_id');
+
+        return redirect()->to('/');
     }
 
     public function register(): bool

@@ -11,6 +11,7 @@ $routes->group('admin', static function ($routes) {
         $routes->get('/', 'Admin\Home\HomeController::index');
 
         $routes->group('auth', static function ($routes) {
+            $routes->get('logout', 'Admin\Auth\AuthController::logout');
             $routes->post('register', 'Admin\Auth\AuthController::register');
         });
     });
@@ -20,8 +21,6 @@ $routes->group('admin', static function ($routes) {
         $routes->post('login', 'Admin\Auth\AuthController::enter');
     });
 });
-
-
 
 $routes->get('/', 'Front\Home\Home::index');
 $routes->group('products', static function ($routes) {

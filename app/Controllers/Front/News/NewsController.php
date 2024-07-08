@@ -8,6 +8,10 @@ class NewsController extends FrontController
 {
     public function list() : string
     {
-        return view('Front/Pages/News');
+        $data = [
+            'selectedPage' => 'news',
+        ];
+
+        return view('Front/Pages/News', $data);
     }
 }

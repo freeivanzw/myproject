@@ -43,11 +43,12 @@ abstract class FrontController extends Controller
      */
     protected $session;
 
+    protected bool $isUser = false;
+    protected $user;
+
     /**
      * @return void
      */
-
-
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
         // Do Not Edit This Line
