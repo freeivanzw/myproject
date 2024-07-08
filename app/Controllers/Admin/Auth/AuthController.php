@@ -4,6 +4,7 @@ namespace App\Controllers\Admin\Auth;
 
 use App\Controllers\Admin\AdminController;
 use App\Models\AdminModel;
+use Exception;
 
 class AuthController extends AdminController
 {
@@ -22,12 +23,23 @@ class AuthController extends AdminController
     public function enter() {
         $data = $this->request->getPost();
         
-        if (empty($data['login']) || empty($data['password'])) {
+        try {
+            if (empty($data['login']) || empty($data['password'])) {
+                throw new Exception();
+            }
+            
+            $admin = $this->adminModel->where('login', $data['login'])->first();
+    
+            if (!password_verify($data['password'], $admin['password_hash'])) {
+                throw new Exception();
+            }
+
+            $this->session->set('admin_id', (int)$admin['admin_id']);
+
+            return redirect()->to('admin');
+        } catch (Exception $err) {
             return redirect()->back()->with('errors', true)->withInput();
         }
-
-
-        return redirect()->to('admin');
     }
 
     public function register(): bool
