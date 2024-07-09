@@ -13,7 +13,7 @@ class AdminAuthFilter implements FilterInterface
         $session = \Config\Services::session();
 
         if (!$session->get('admin_id')) {
-            return redirect()->to('/admin/auth/login');
+            return redirect()->to('/');
         }
     }
 

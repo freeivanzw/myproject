@@ -14,6 +14,15 @@ $routes->group('admin', static function ($routes) {
             $routes->get('logout', 'Admin\Auth\AuthController::logout');
             $routes->post('register', 'Admin\Auth\AuthController::register');
         });
+
+        $routes->group('products', static function ($routes) {
+            $routes->get('/', 'Admin\Products\ProductsController::index');
+            $routes->post('/', 'Admin\Products\ProductsController::create');
+            $routes->get('(:num)', 'Admin\Products\ProductsController::edit/$1');
+            $routes->post('(:num)', 'Admin\Products\ProductsController::saveChanges');
+            $routes->get('remove/(:num)', 'Admin\Products\ProductsController::remove/$1');
+
+        });
     });
 
     $routes->group('auth', static function ($routes) {
