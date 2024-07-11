@@ -22,13 +22,13 @@
             <input type="number" class="form-control" id="price" name="price" value="<?= esc($product['price']) ?>" required>
         </div>
 
-        <!-- <div class="form-group mb-3">
+        <div class="form-group mb-3">
             <label for="image">Зображення</label>
             <input type="file" class="form-control-file" id="image" name="image">
             <?php if ($product['main_photo']): ?>
-                <img src="<?= base_url('uploads/' . $product['main_photo']) ?>" alt="Product Image" class="img-thumbnail mt-2" width="150">
+                <img src="<?= base_url('uploads/products-photo/' . $product['product_id'] . '/' . $product['main_photo']) ?>" alt="Product Image" class="img-thumbnail mt-2" width="150">
             <?php endif; ?>
-        </div> -->
+        </div>
 
         <button type="submit" class="btn btn-primary">Зберегти</button>
     </form>

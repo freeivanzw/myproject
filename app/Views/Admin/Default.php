@@ -16,7 +16,7 @@
         <hr>
         <?= $this->render('Admin/Components/Menu'); ?>
     </div>
-
+        
         <!-- Контент -->
         <div class="content">
             <?= $this->renderSection('content'); ?>

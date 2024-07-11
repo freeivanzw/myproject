@@ -67,22 +67,35 @@ class ProductsController extends AdminController
         $rules = [
             'name' => 'required',
             'price' => 'required',
+            'image' => [
+                'label' => 'Image File',
+                'rules' => 'if_exist|uploaded[file]|is_image[file]|mime_in[file,image/jpg,image/jpeg,image/gif,image/png]|max_size[file,2048]',
+            ],
         ];
 
-        $validation = \Config\Services::validation();
         if (!$this->validate($rules)) {
             return redirect()->back();
         }
 
-        $validation->run([
-            'name' =>  $form['name'],
-            'price' => $form['price'],
-        ]);
+        $img = $this->request->getFile('image');
+
+        if (isset($img) && $img->isValid()) {
+            
+            $dirPath = FCPATH . 'uploads/products-photo/' . $product['product_id'];
+            
+            if (!is_dir($dirPath)) {
+                mkdir($dirPath, 0777, true);
+            }
+
+            $fileName = $img->getRandomName();
+            $img->move($dirPath, $fileName, true);
+        }
 
         $this->productModel->update($product['product_id'], [
             'name' => $form['name'],
             'description' => $form['description'],
             'price' => $form['price'],
+            'main_photo' => $fileName ?? null,
         ]);
 
         return redirect()->back();
