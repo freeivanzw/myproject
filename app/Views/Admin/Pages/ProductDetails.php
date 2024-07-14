@@ -9,24 +9,27 @@
 
         <div class="form-group mb-3">
             <label for="name">Назва</label>
-            <input type="text" class="form-control" id="name" name="name" value="<?= esc($product['name']) ?>" required>
+            <input type="text" class="form-control" id="name" name="name" value="<?= esc($product['name']) ?>">
         </div>
 
         <div class="form-group mb-3">
             <label for="description">Опис</label>
-            <textarea class="form-control" id="description" name="description" required><?= esc($product['description']) ?></textarea>
+            <textarea class="form-control" id="description" name="description"><?= esc($product['description']) ?></textarea>
         </div>
 
         <div class="form-group mb-3">
             <label for="price">Ціна грн.</label>
-            <input type="number" class="form-control" id="price" name="price" value="<?= esc($product['price']) ?>" required>
+            <input type="number" class="form-control" id="price" name="price" value="<?= esc($product['price']) ?>">
         </div>
 
         <div class="form-group mb-3">
             <label for="image">Зображення</label>
             <input type="file" class="form-control-file" id="image" name="image">
             <?php if ($product['main_photo']): ?>
-                <img src="<?= base_url('uploads/products-photo/' . $product['product_id'] . '/' . $product['main_photo']) ?>" alt="Product Image" class="img-thumbnail mt-2" width="150">
+                <div class="selected_photo">
+                    <img src="<?= base_url('uploads/products-photo/' . $product['product_id'] . '/' . $product['main_photo']) ?>" alt="Product Image" class="img-thumbnail mt-2" width="150">
+                    <a href="<?= base_url('admin/products/remove/mainPhoto/?productId=' . $product['product_id'] . '&photoName=' . $product['main_photo']) ?>"><?=lang('App.delete');?></a>
+                </div>
             <?php endif; ?>
         </div>
 

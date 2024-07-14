@@ -20,7 +20,12 @@ $routes->group('admin', static function ($routes) {
             $routes->post('/', 'Admin\Products\ProductsController::create');
             $routes->get('(:num)', 'Admin\Products\ProductsController::edit/$1');
             $routes->post('(:num)', 'Admin\Products\ProductsController::saveChanges');
-            $routes->get('remove/(:num)', 'Admin\Products\ProductsController::remove/$1');
+            
+            $routes->group('remove', static function ($routes) {
+                $routes->get('(:num)', 'Admin\Products\ProductsController::remove/$1');
+                
+                $routes->get('mainPhoto',  'Admin\Products\ProductsController::removeMainPhoto');
+            });
 
         });
     });

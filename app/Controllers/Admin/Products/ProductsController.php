@@ -5,6 +5,7 @@ namespace App\Controllers\Admin\Products;
 use App\Controllers\Admin\AdminController;
 use App\Models\ProductModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use Exception;
 
 class ProductsController extends AdminController
 {
@@ -115,5 +116,35 @@ class ProductsController extends AdminController
         $this->productModel->delete($id);
 
         return redirect('admin/products');
+    }
+
+    /**
+     * @param int
+     */
+    public function removeMainPhoto()
+    {
+
+        $productId = $this->request->getGet('productId');
+
+        if (empty($productId)) {
+            throw new PageNotFoundException('productId must been not null');
+        }
+
+        $product = $this->productModel->find($productId);
+        
+        if (!$product) {
+            throw new PageNotFoundException('product id not found');
+        }
+        
+        $fielPath = 'uploads/products-photo/' . $product['product_id'] . '/' . $product['main_photo'];
+        if (file_exists($fielPath)) {
+            unlink($fielPath);
+        }
+        
+        $product['main_photo'] = null;
+        $this->productModel->save($product);
+
+        return redirect()->back();
+
     }
 }
