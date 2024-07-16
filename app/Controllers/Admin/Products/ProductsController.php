@@ -78,26 +78,29 @@ class ProductsController extends AdminController
             return redirect()->back();
         }
 
+        $updateData = [
+            'name' => $form['name'],
+            'description' => $form['description'],
+            'price' => $form['price'],
+        ];
+
         $img = $this->request->getFile('image');
 
         if (isset($img) && $img->isValid()) {
-            
+
             $dirPath = FCPATH . 'uploads/products-photo/' . $product['product_id'];
-            
+
             if (!is_dir($dirPath)) {
                 mkdir($dirPath, 0777, true);
             }
 
             $fileName = $img->getRandomName();
             $img->move($dirPath, $fileName, true);
+
+            $updateData['main_photo'] = $fileName;
         }
 
-        $this->productModel->update($product['product_id'], [
-            'name' => $form['name'],
-            'description' => $form['description'],
-            'price' => $form['price'],
-            'main_photo' => $fileName ?? null,
-        ]);
+        $this->productModel->update($product['product_id'], $updateData);
 
         return redirect()->back();
     }
@@ -131,20 +134,19 @@ class ProductsController extends AdminController
         }
 
         $product = $this->productModel->find($productId);
-        
+
         if (!$product) {
             throw new PageNotFoundException('product id not found');
         }
-        
+
         $fielPath = 'uploads/products-photo/' . $product['product_id'] . '/' . $product['main_photo'];
         if (file_exists($fielPath)) {
             unlink($fielPath);
         }
-        
+
         $product['main_photo'] = null;
         $this->productModel->save($product);
 
         return redirect()->back();
-
     }
 }

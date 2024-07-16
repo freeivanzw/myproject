@@ -27,4 +27,16 @@ class ProductsController extends FrontController
 
         return view('Front/Pages/Products', $data);
     }
+
+    public function details (int $id) : string
+    {
+        $product = $this->productModel->find($id);
+        
+        $data = [
+            'selectedPage' => 'products',
+            'product' => $product,
+        ];
+
+        return view('Front/Pages/ProductsDetails', $data);
+    }
 }

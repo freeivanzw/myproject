@@ -23,13 +23,14 @@
         </div>
 
         <div class="form-group mb-3">
-            <label for="image">Зображення</label>
-            <input type="file" class="form-control-file" id="image" name="image">
             <?php if ($product['main_photo']): ?>
                 <div class="selected_photo">
                     <img src="<?= base_url('uploads/products-photo/' . $product['product_id'] . '/' . $product['main_photo']) ?>" alt="Product Image" class="img-thumbnail mt-2" width="150">
                     <a href="<?= base_url('admin/products/remove/mainPhoto/?productId=' . $product['product_id'] . '&photoName=' . $product['main_photo']) ?>"><?=lang('App.delete');?></a>
                 </div>
+            <?php else: ?>
+                <label for="image">Зображення</label>
+                <input type="file" class="form-control-file" id="image" name="image">
             <?php endif; ?>
         </div>
 

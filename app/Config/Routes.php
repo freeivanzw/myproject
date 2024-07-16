@@ -39,6 +39,7 @@ $routes->group('admin', static function ($routes) {
 $routes->get('/', 'Front\Home\Home::index');
 $routes->group('products', static function ($routes) {
     $routes->get('/', 'Front\Products\ProductsController::list');
+    $routes->get('(:num)', 'Front\Products\ProductsController::details/$1');
 });
 $routes->group('news', static function ($routes) {
     $routes->get('/', 'Front\News\NewsController::list');
