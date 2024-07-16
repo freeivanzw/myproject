@@ -17,11 +17,12 @@ class ProductsController extends FrontController
 
     public function list () : string
     {
-        $products = $this->productModel->orderBy('created_at', 'DESC')->findAll();
+        $products = $this->productModel->orderBy('created_at', 'DESC')->paginate(8);
 
         $data = [
             'selectedPage' => 'products',
             'products' => $products,
+            'pager' => $this->productModel->pager,
         ];
 
         return view('Front/Pages/Products', $data);

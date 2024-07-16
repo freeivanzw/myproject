@@ -1,7 +1,7 @@
 <?= $this->extend('Front/Default'); ?>
 
 <?= $this->section('content'); ?>
-<?php// dd($products);?>
+
 <section class="py-5">
     <div class="container px-4 px-lg-5 ">
         <div class="h1 text-center mb-5">Каталог товарів</div>
@@ -43,27 +43,6 @@
             <?php endforeach; ?>
         </div>
     </div>
-    <nav aria-label="Page navigation">
-        <ul class="pagination justify-content-center">
-            
-
-            <li class="page-item active">
-                <a class="page-link" href="#">
-                    1
-                </a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="#">
-                    2
-                </a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="#">
-                    3
-                </a>
-            </li>
-
-        </ul>
-    </nav>
+    <?=$pager->links('default', 'custom_pager');?>
 </section>
 <?= $this->endSection(); ?>
