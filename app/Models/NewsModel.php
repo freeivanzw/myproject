@@ -6,7 +6,12 @@ use CodeIgniter\Model;
 
 class NewsModel extends Model 
 {
-    protected $table = 'news';
+    protected $table = 'News';
     protected $primaryKey = 'news_id';
-    protected $allowedFields = ['title', 'description', 'text', 'created_date'];
+    protected $allowedFields = ['title', 'description', 'news_text'];
+
+    protected $useTimestamps = true;
+    protected $dateFormat    = 'datetime';
+    protected $createdField  = 'created_at';
+    protected $updatedField  = 'updated_at';
 }
