@@ -16,11 +16,12 @@ class NewsController extends FrontController
 
     public function list() : string
     {
-        $news = $this->newsModel->orderBy('created_at', 'DESC')->paginate(8);
+        $news = $this->newsModel->orderBy('created_at', 'DESC')->paginate(9);
 
         $data = [
             'selectedPage' => 'news',
             'news' => $news,
+            'pager' => $this->newsModel->pager,
         ];
 
         return view('Front/Pages/News', $data);

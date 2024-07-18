@@ -18,6 +18,7 @@
                 </div>
             <?php endforeach; ?>
         </div>
+        <?=$pager->links('default', 'custom_pager');?>
     </div>
 </section>
 <?= $this->endSection(); ?>

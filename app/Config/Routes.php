@@ -26,7 +26,6 @@ $routes->group('admin', static function ($routes) {
                 
                 $routes->get('mainPhoto',  'Admin\Products\ProductsController::removeMainPhoto');
             });
-
         });
 
         $routes->group('news', static function ($routes) {
@@ -35,6 +34,10 @@ $routes->group('admin', static function ($routes) {
             $routes->get('(:num)', 'Admin\News\NewsController::edit/$1');
             $routes->post('(:num)', 'Admin\News\NewsController::saveChanges');
             $routes->get('remove/(:num)', 'Admin\News\NewsController::remove/$1');
+        });
+
+        $routes->group('contacts', static function ($routes) {
+            $routes->get('/', 'Admin\Contacts\ContactsController::index');
         });
     });
 
