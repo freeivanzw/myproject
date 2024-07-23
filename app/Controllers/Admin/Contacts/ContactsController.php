@@ -16,9 +16,26 @@ class ContactsController extends AdminController
 
     public function index()
     {
+        $stores = $this->storeModel->getStoresWithPhones();
+
+        $data = [
+            'stores' => $stores,
+        ];
         
+        return view('Admin/Pages/Contacts', $data);
+    }
 
+    public function createStore()
+    {
+        $data = [
+            'name' => null,
+            'address' => null,
+            'email' => null,
+            'working_hours' => null
+        ];
 
-        dd($this->storeModel->getStoresWithPhones());
+        $this->storeModel->save($data);
+
+        return redirect()->to('admin/contacts');
     }
 }

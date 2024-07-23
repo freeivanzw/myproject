@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use App\Models\StorePhoneModel;
 
 class StoreModel extends Model
 {
@@ -13,9 +14,21 @@ class StoreModel extends Model
 
     protected $allowedFields = ['name', 'address', 'email', 'working_hours'];
 
-    public function getStoresWithPhones()
+    public function getStoresWithPhones(): array
     {
-        // в моделі з телефонами зробити метод знайти по ід магазину, потім виклакати той метод тут
+        $stores = $this->orderBy('store_id', 'DESC')->findAll();
+        foreach ($stores as $key => $value) {
+            $storePhoneModel = new StorePhoneModel();
+
+            $stores[$key]['phones'] = [];
+
+            $phonesRecords = $storePhoneModel->where('store_id', $value['store_id'])->find();
+
+            foreach ($phonesRecords as $phone) {
+                $stores[$key]['phones'][$phone['phone_id']] = $phone['phone'];
+            }
+        }
+        return $stores;
     }
 }
 

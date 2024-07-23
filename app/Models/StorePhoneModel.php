@@ -12,4 +12,5 @@ class StorePhoneModel extends Model
     protected $useAutoIncrement = true;
 
     protected $allowedFields = ['store_id', 'phone'];
+
 }
