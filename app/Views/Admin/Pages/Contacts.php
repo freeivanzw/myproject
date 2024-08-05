@@ -24,11 +24,12 @@
                     </div>
                     <div class="form-group mb-3">
                         <label>Телефони</label>
-                        <a href="#" class="btn btn-secondary px-3 mb-2">Додати телефон</a>
+                        <button type="button" data-store-id="<?=$storeItem['store_id'];?>" class="create_phone btn btn-secondary px-3 mb-2">Додати телефон</button>
                         <ul class="list-group">
                             <?php foreach($storeItem['phones'] as $phoneId => $phone):?>
                                 <li class="list-group-item">
                                     <input type="tel" class="form-control" name="phones[]" data-phone-id="<?=$phoneId;?>" value="<?=$phone;?>">
+                                    <button type="button" class="remove_phone">[X]</button>
                                 </li>
                             <?php endforeach; ?>
                         </ul>
@@ -41,4 +42,53 @@
         
     </ul>
 </section>
+<script>
+    const base_url = '<?=base_url('');?>';
+
+    const $createPhoneBtns = document.querySelectorAll('.create_phone');
+
+
+    $createPhoneBtns.forEach(function ($btn) {
+        $btn.addEventListener('click',async function () {
+            const storeId = this.getAttribute('data-store-id');
+
+            try {
+                const req = await fetch(base_url + 'admin/contacts/create-phone', {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        storeId: storeId,
+                    })
+                })
+
+                // const data = await req.json();
+                // console.log(data);
+            } catch (err) {
+                console.log(err.message);
+            }
+           
+        })
+    });
+
+    const $removePhoneBtns = document.querySelectorAll('.remove_phone');
+
+    function removePhone (id) {
+        fetch(base_url + '');
+    }
+
+    $removePhoneBtns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            const $phoneInput = this.closest('.list-group-item').querySelector('input');
+            const phoneId = $phoneInput.getAttribute('data-phone-id');
+
+            if (!phoneId) {
+                return false;
+            }
+
+            removePhone(phoneId);
+        })
+    });
+</script>
 <?= $this->endSection();?>

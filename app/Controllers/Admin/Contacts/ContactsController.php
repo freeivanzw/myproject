@@ -4,14 +4,18 @@ namespace App\Controllers\Admin\Contacts;
 
 use App\Controllers\Admin\AdminController;
 use App\Models\StoreModel;
+use App\Models\StorePhoneModel;
+use Exception;
 
 class ContactsController extends AdminController
 {
     protected StoreModel $storeModel;
+    protected StorePhoneModel $storePhoneModel;
 
     public function __construct()
     {
         $this->storeModel = new StoreModel();
+        $this->storePhoneModel = new StorePhoneModel();
     }
 
     public function index()
@@ -37,5 +41,40 @@ class ContactsController extends AdminController
         $this->storeModel->save($data);
 
         return redirect()->to('admin/contacts');
+    }
+
+    public function createPhone()
+    {
+        $request = $this->request->getJSON();
+
+        $store = $this->storeModel->find($request->storeId);
+
+        if (!$store) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Store not found');
+        }
+    
+        $phoneData = [
+            'store_id' => $store['store_id'],
+            'phone' => null,
+        ];
+
+        $phone = $this->storePhoneModel->save($phoneData);
+
+        if (!$phone) {
+            $this->response->setJSON([
+                'success' => false,
+                'message' => 'Failed to save phone data'
+            ])->setStatusCode(500);
+        }
+
+        return $this->response->setJSON([
+            'success' => true,
+            'phoneData' => $phoneData
+        ]);
+    }
+
+    public function removePhone()
+    {
+        
     }
 }
