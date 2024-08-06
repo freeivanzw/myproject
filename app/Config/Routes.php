@@ -40,6 +40,7 @@ $routes->group('admin', static function ($routes) {
             $routes->get('/', 'Admin\Contacts\ContactsController::index');
             $routes->get('create-store', 'Admin\Contacts\ContactsController::createStore');
             $routes->post('create-phone', 'Admin\Contacts\ContactsController::createPhone');
+            $routes->get('remove-phone/(:num)', 'Admin\Contacts\ContactsController::removePhone/$1');
         });
     });
 

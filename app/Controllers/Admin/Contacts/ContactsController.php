@@ -69,11 +69,24 @@ class ContactsController extends AdminController
 
         return $this->response->setJSON([
             'success' => true,
-            'phoneData' => $phoneData
+            'phoneId' => $this->storePhoneModel->insertID(),
         ]);
     }
 
-    public function removePhone()
+    public function removePhone(int $id)
+    {
+        if (!$this->storePhoneModel->find($id)) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Phone not found');
+        }
+        
+        $this->storePhoneModel->delete($id);
+
+        return $this->response->setJSON([
+            'success' => true,
+        ]);
+    }
+
+    public function editPhone()
     {
         
     }

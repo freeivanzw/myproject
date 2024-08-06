@@ -47,7 +47,6 @@
 
     const $createPhoneBtns = document.querySelectorAll('.create_phone');
 
-
     $createPhoneBtns.forEach(function ($btn) {
         $btn.addEventListener('click',async function () {
             const storeId = this.getAttribute('data-store-id');
@@ -63,8 +62,21 @@
                     })
                 })
 
-                // const data = await req.json();
-                // console.log(data);
+                const data = await req.json();
+                
+                if (!data.success) {
+                    throw new Error('phones not created');
+                }
+
+                const HTML = `
+                    <li class="list-group-item">
+                        <input type="tel" class="form-control" name="phones[]" data-phone-id="${data.phoneId}" value="">
+                        <button type="button" class="remove_phone">[X]</button>
+                    </li>
+                `;
+
+                $phonesList = $btn.nextElementSibling;
+                $phonesList.innerHTML += HTML;
             } catch (err) {
                 console.log(err.message);
             }
@@ -74,12 +86,9 @@
 
     const $removePhoneBtns = document.querySelectorAll('.remove_phone');
 
-    function removePhone (id) {
-        fetch(base_url + '');
-    }
-
     $removePhoneBtns.forEach(function (btn) {
-        btn.addEventListener('click', function () {
+        btn.addEventListener('click', async function () {
+            const $phoneGroup = this.closest('.list-group-item');
             const $phoneInput = this.closest('.list-group-item').querySelector('input');
             const phoneId = $phoneInput.getAttribute('data-phone-id');
 
@@ -87,7 +96,21 @@
                 return false;
             }
 
-            removePhone(phoneId);
+            try {
+                const req = await fetch(base_url + 'admin/contacts/remove-phone/' + phoneId, {
+                    method: 'GET',
+                });
+
+                const body = await req.json();
+
+                if (!body.success) {
+                    return false;
+                }
+
+                $phoneGroup.remove();
+            } catch (err) {
+                console.log(err.message);
+            }
         })
     });
 </script>
