@@ -5,7 +5,7 @@ namespace App\Controllers\Admin\Contacts;
 use App\Controllers\Admin\AdminController;
 use App\Models\StoreModel;
 use App\Models\StorePhoneModel;
-use Exception;
+use CodeIgniter\Exceptions\PageNotFoundException;
 
 class ContactsController extends AdminController
 {
@@ -43,6 +43,49 @@ class ContactsController extends AdminController
         return redirect()->to('admin/contacts');
     }
 
+    public function saveStore() {
+        $form = $this->request->getPost();
+
+        $store = $this->storeModel->find($form['store-id']);
+
+        if (!$store) {
+            throw PageNotFoundException::forPageNotFound('Store not found');
+        }
+        
+        $store = array_merge($store, [
+            'name' => $form['name'],
+            'address' => $form['address'],
+            'email' => $form['email'],
+        ]);
+
+        $this->storeModel->save($store);
+
+        foreach($form['phones'] as $id => $number) {
+            $tel = $this->storePhoneModel->find($id);
+
+            $tel['phone'] = $number;
+            $this->storePhoneModel->save($tel);
+        }
+
+        return redirect()->back();
+    }
+
+    public function removeStore(int $id) {
+        $store = $this->storeModel->find($id);
+
+        if (!$store) {
+            throw PageNotFoundException::forPageNotFound('Store not found');
+        }
+
+        $this->storePhoneModel
+            ->where('store_id', $store['store_id'] )
+            ->delete();
+        
+        $this->storeModel->delete($store['store_id']);
+        
+        return redirect()->back();
+    }
+
     public function createPhone()
     {
         $request = $this->request->getJSON();
@@ -50,7 +93,7 @@ class ContactsController extends AdminController
         $store = $this->storeModel->find($request->storeId);
 
         if (!$store) {
-            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Store not found');
+            throw PageNotFoundException::forPageNotFound('Store not found');
         }
     
         $phoneData = [
@@ -76,7 +119,7 @@ class ContactsController extends AdminController
     public function removePhone(int $id)
     {
         if (!$this->storePhoneModel->find($id)) {
-            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Phone not found');
+            throw PageNotFoundException::forPageNotFound('Phone not found');
         }
         
         $this->storePhoneModel->delete($id);
@@ -86,8 +129,5 @@ class ContactsController extends AdminController
         ]);
     }
 
-    public function editPhone()
-    {
-        
-    }
+    
 }

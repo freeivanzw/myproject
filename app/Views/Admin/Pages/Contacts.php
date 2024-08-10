@@ -7,8 +7,8 @@
     <ul class="list-group">
         <?php foreach($stores as $storeItem): ?>
             <li class="list-group-item">
-                <form action="" method="post">
-                    <input type="hidden" name="store_id" value="<?=$storeItem['store_id'];?>">
+                <form action="<?=base_url('admin/contacts/update-store');?>" method="post">
+                    <input type="hidden" name="store-id" value="<?=$storeItem['store_id'];?>">
                     <span class="h2 mb-4"><?=$storeItem['name'];?></span> 
                     <div class="form-group mb-3">
                         <label for="name-<?=$storeItem['store_id'];?>">Назва</label>
@@ -17,6 +17,10 @@
                     <div class="form-group mb-3">
                         <label for="address-<?=$storeItem['store_id'];?>">Адреса</label>
                         <input type="text" class="form-control" id="address-<?=$storeItem['store_id'];?>" name="address" value="<?=$storeItem['address'];?>">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="hours-<?=$storeItem['store_id'];?>">Години роботи</label>
+                        <input type="text" class="form-control" id="hours-<?=$storeItem['store_id'];?>" name="working_hours" value="<?=$storeItem['working_hours'];?>">
                     </div>
                     <div class="form-group mb-3">
                         <label for="email-<?=$storeItem['store_id'];?>">Email</label>
@@ -28,14 +32,14 @@
                         <ul class="list-group">
                             <?php foreach($storeItem['phones'] as $phoneId => $phone):?>
                                 <li class="list-group-item">
-                                    <input type="tel" class="form-control" name="phones[]" data-phone-id="<?=$phoneId;?>" value="<?=$phone;?>">
+                                    <input type="tel" class="form-control" name="phones[<?=$phoneId;?>]" data-phone-id="<?=$phoneId;?>" value="<?=$phone;?>">
                                     <button type="button" class="remove_phone">[X]</button>
                                 </li>
                             <?php endforeach; ?>
                         </ul>
                     </div>
                     <button type="submit" class="btn btn-primary">Save</button>
-                    <a href="#" class="btn btn-danger px-3">Видалити магазин</a>
+                    <a href="<?=base_url('admin/contacts/remove-store/' . $storeItem['store_id']);?>" class="btn btn-danger px-3">Видалити магазин</a>
                 </form>
             </li>
         <?php endforeach; ?>
@@ -70,7 +74,7 @@
 
                 const HTML = `
                     <li class="list-group-item">
-                        <input type="tel" class="form-control" name="phones[]" data-phone-id="${data.phoneId}" value="">
+                        <input type="tel" class="form-control" name="phones[${data.phoneId}]" data-phone-id="${data.phoneId}" value="">
                         <button type="button" class="remove_phone">[X]</button>
                     </li>
                 `;

@@ -39,6 +39,8 @@ $routes->group('admin', static function ($routes) {
         $routes->group('contacts', static function ($routes) {
             $routes->get('/', 'Admin\Contacts\ContactsController::index');
             $routes->get('create-store', 'Admin\Contacts\ContactsController::createStore');
+            $routes->post('update-store', 'Admin\Contacts\ContactsController::saveStore');
+            $routes->get('remove-store/(:num)', 'Admin\Contacts\ContactsController::removeStore/$1');
             $routes->post('create-phone', 'Admin\Contacts\ContactsController::createPhone');
             $routes->get('remove-phone/(:num)', 'Admin\Contacts\ContactsController::removePhone/$1');
         });
