@@ -49,6 +49,7 @@
                 </div>
             </div>
         </div>
+        <?=html_entity_decode($v['map']);?>
     <?php endforeach; ?>
     
 </div>

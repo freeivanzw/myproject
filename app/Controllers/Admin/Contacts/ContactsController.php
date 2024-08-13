@@ -35,7 +35,8 @@ class ContactsController extends AdminController
             'name' => null,
             'address' => null,
             'email' => null,
-            'working_hours' => null
+            'working_hours' => null,
+            'map' => null,
         ];
 
         $this->storeModel->save($data);
@@ -56,6 +57,8 @@ class ContactsController extends AdminController
             'name' => $form['name'],
             'address' => $form['address'],
             'email' => $form['email'],
+            'working_hours' => $form['working_hours'],
+            'map' => htmlentities($form['map']),
         ]);
 
         $this->storeModel->save($store);

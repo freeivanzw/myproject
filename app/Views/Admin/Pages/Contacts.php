@@ -27,6 +27,10 @@
                         <input type="email" class="form-control" id="email-<?=$storeItem['store_id'];?>" name="email" value="<?=$storeItem['email'];?>">
                     </div>
                     <div class="form-group mb-3">
+                        <label for="map-<?=$storeItem['store_id'];?>">Карта <small>(Вставте тег iframe з google maps)</small></label>
+                        <input type="text" class="form-control" id="map-<?=$storeItem['store_id'];?>" name="map" value="<?=$storeItem['map'];?>">
+                    </div>
+                    <div class="form-group mb-3">
                         <label>Телефони</label>
                         <button type="button" data-store-id="<?=$storeItem['store_id'];?>" class="create_phone btn btn-secondary px-3 mb-2">Додати телефон</button>
                         <ul class="list-group">

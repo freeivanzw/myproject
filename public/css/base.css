@@ -20,3 +20,9 @@ body {
     width: 4rem;
     font-size: 2rem;
 }
+
+.contact-container iframe {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 4 / 2;
+}

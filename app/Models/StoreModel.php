@@ -12,7 +12,7 @@ class StoreModel extends Model
 
     protected $useAutoIncrement = true;
 
-    protected $allowedFields = ['name', 'address', 'email', 'working_hours'];
+    protected $allowedFields = ['name', 'address', 'email', 'working_hours', 'map'];
 
     public function getStoresWithPhones(): array
     {
