@@ -44,6 +44,13 @@ $routes->group('admin', static function ($routes) {
             $routes->post('create-phone', 'Admin\Contacts\ContactsController::createPhone');
             $routes->get('remove-phone/(:num)', 'Admin\Contacts\ContactsController::removePhone/$1');
         });
+
+        $routes->group('advantages', static function ($routes) {
+            $routes->post('/', 'Admin\Advantage\AdvantageController::create');
+            $routes->post('(:num)', 'Admin\Advantage\AdvantageController::edit/$1');
+            $routes->get('remove-photo', 'Admin\Advantage\AdvantageController::removeImage');
+            $routes->get('remove/(:num)', 'Admin\Advantage\AdvantageController::remove/$1');
+        });
     });
 
     $routes->group('auth', static function ($routes) {

@@ -118,7 +118,7 @@ class ProductsController extends AdminController
 
         $this->productModel->delete($id);
 
-        return redirect('admin/products');
+        return redirect('admin/products'); //TODO при видаленні не видаляється зображення
     }
 
     /**
