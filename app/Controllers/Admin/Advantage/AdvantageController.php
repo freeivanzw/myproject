@@ -33,6 +33,7 @@ class AdvantageController extends AdminController
             throw PageNotFoundException::forPageNotFound($id . ': advantage id not found');
         }
 
+        $this->removeImage($id);
         $this->advantageModel->where('advantage_id', $id)->delete();
 
         return redirect()->back();
@@ -80,9 +81,8 @@ class AdvantageController extends AdminController
         return redirect()->back();
     }
 
-    public function removeImage()
+    public function removeImage(int $advantageId)
     {
-        $advantageId = $this->request->getGet('id');
 
         if (empty($advantageId)) {
             throw new PageNotFoundException('id must been not null');

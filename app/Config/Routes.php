@@ -24,7 +24,7 @@ $routes->group('admin', static function ($routes) {
             $routes->group('remove', static function ($routes) {
                 $routes->get('(:num)', 'Admin\Products\ProductsController::remove/$1');
                 
-                $routes->get('mainPhoto',  'Admin\Products\ProductsController::removeMainPhoto');
+                $routes->get('mainPhoto/(:num)',  'Admin\Products\ProductsController::removeMainPhoto/$1');
             });
         });
 
@@ -48,7 +48,7 @@ $routes->group('admin', static function ($routes) {
         $routes->group('advantages', static function ($routes) {
             $routes->post('/', 'Admin\Advantage\AdvantageController::create');
             $routes->post('(:num)', 'Admin\Advantage\AdvantageController::edit/$1');
-            $routes->get('remove-photo', 'Admin\Advantage\AdvantageController::removeImage');
+            $routes->get('remove-photo/(:num)', 'Admin\Advantage\AdvantageController::removeImage/$1');
             $routes->get('remove/(:num)', 'Admin\Advantage\AdvantageController::remove/$1');
         });
     });

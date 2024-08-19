@@ -45,7 +45,7 @@
                         <?php if ($advantageItem['image']): ?>
                             <div class="selected_photo">
                                 <img src="<?=base_url('uploads/advantage-photo/' .  $advantageItem['advantage_id'] . '/' . $advantageItem['image']);?>" alt="Product Image" class="img-thumbnail mt-2" width="150">
-                                <a href="<?=base_url('admin/advantages/remove-photo?id=' . $advantageItem['advantage_id'] );?>">Видалити</a>
+                                <a href="<?=base_url('admin/advantages/remove-photo/' . $advantageItem['advantage_id'] );?>">Видалити</a>
                             </div>
                         <?php else: ?>
                             <label for="advantage-img">Зображення</label>

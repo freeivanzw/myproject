@@ -116,19 +116,17 @@ class ProductsController extends AdminController
             throw new PageNotFoundException('Product does not exist');
         }
 
+        $this->removeMainPhoto($id);
         $this->productModel->delete($id);
 
-        return redirect('admin/products'); //TODO при видаленні не видаляється зображення
+        return redirect('admin/products');
     }
 
     /**
      * @param int
      */
-    public function removeMainPhoto()
+    public function removeMainPhoto(int $productId)
     {
-
-        $productId = $this->request->getGet('productId');
-
         if (empty($productId)) {
             throw new PageNotFoundException('productId must been not null');
         }
