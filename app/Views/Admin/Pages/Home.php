@@ -5,23 +5,27 @@
     <span class="h2">Головна сторінка</span>
 
     <span class="h3">Баннер</span>
-    <form action="#" class="mb-4">
+    
+    <form action="<?=base_url('admin/banner/1');?>" method="post" enctype="multipart/form-data" class="mb-4">
+        <input type="hidden" name="banner_id" value="<?=$banner['banner_id'];?>">
         <div class="form-group mb-3">
             <label for="name">Назва</label>
-            <input type="text" class="form-control" id="name" name="name" value="">
+            <input type="text" class="form-control" id="name" name="title" value="<?=$banner['title'];?>">
         </div>
         <div class="form-group mb-3">
             <label for="name">Підзаголовок</label>
-            <input type="text" class="form-control" id="subtitle" name="subtitle" value="">
+            <input type="text" class="form-control" id="subtitle" name="subtitle" value="<?=$banner['subtitle'];?>">
         </div>
         <div class="form-group mb-3">
-            <div class="selected_photo">
-                <img src="#" alt="Product Image" class="img-thumbnail mt-2" width="150">
-                <a href="#">Видалити</a>
-            </div>
-
-            <label for="image">Зображення</label>
-            <input type="file" class="form-control-file" id="image" name="image">
+            <?php if ($banner['image']): ?>
+                <div class="selected_photo">
+                    <img src="<?=base_url('uploads/banner-photo/' .  $banner['banner_id'] . '/' . $banner['image']);?>" alt="banner Image" class="img-thumbnail mt-2" width="150">
+                    <a href="<?=base_url('admin/banner/remove/image/' . $banner['banner_id'] );?>">Видалити</a>
+                </div>
+            <?php else: ?>
+                <label for="advantage-img">Зображення</label>
+                <input type="file" class="form-control-file" id="banner-img-<?=$banner['banner_id'];?>" name="image">
+            <?php endif;?>
         </div>
         <button type="submit" class="btn btn-primary">Зберегти</button>
     </form>

@@ -51,6 +51,15 @@ $routes->group('admin', static function ($routes) {
             $routes->get('remove-photo/(:num)', 'Admin\Advantage\AdvantageController::removeImage/$1');
             $routes->get('remove/(:num)', 'Admin\Advantage\AdvantageController::remove/$1');
         });
+
+        $routes->group('banner', static function ($routes) {
+            $routes->post('/', 'Admin\Banner\BannerController::create');
+            $routes->post('(:num)', 'Admin\Banner\BannerController::update/$1');
+
+            $routes->group('remove', static function ($routes) { 
+                $routes->get('image/(:num)',  'Admin\Banner\BannerController::removeImage/$1');
+            });
+        });
     });
 
     $routes->group('auth', static function ($routes) {
