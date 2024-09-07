@@ -4,16 +4,18 @@ namespace App\Controllers\Admin\Products;
 
 use App\Controllers\Admin\AdminController;
 use App\Models\ProductModel;
+use App\Models\ProductPhotoModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
-use Exception;
 
 class ProductsController extends AdminController
 {
-    protected $productModel;
+    protected ProductModel $productModel;
+    protected ProductPhotoModel $productPhotoModel;
 
     public function __construct()
     {
         $this->productModel = new ProductModel();
+        $this->productPhotoModel = new ProductPhotoModel();
     }
 
     public function index()
@@ -44,12 +46,17 @@ class ProductsController extends AdminController
     /**
      * @param int
      */
-    public function edit(int $id)
+    public function details(int $id)
     {
         $product = $this->productModel->find($id);
+        $photos = $this->productPhotoModel
+            ->where('product_id', $id)
+            ->select(['photo_id', 'image_url'])
+            ->findAll();
 
         $data = [
             'product' => $product,
+            'photos' => $photos,
         ];
 
         return view('Admin/Pages/ProductDetails', $data);
@@ -146,5 +153,41 @@ class ProductsController extends AdminController
         $this->productModel->save($product);
 
         return redirect()->back();
+    }
+
+    public function addPhoto()
+    {
+        $productId = $this->request->getPost('product_id');
+        $productAlt = $this->request->getPost('alt');
+        $image = $this->request->getFile('image');
+
+        
+        if ($image->isValid() && !$image->hasMoved()) {
+            $dirPath = FCPATH . 'uploads/product-images/' . $productId;
+
+            if (!is_dir($dirPath)) {
+                mkdir($dirPath, 0777, true);
+            }
+            
+            $newName = $image->getRandomName();
+            $image->move($dirPath, $newName, true);
+
+            $imageUrl = base_url('uploads/product-images/' . $productId . '/' . $newName);
+
+            $data = [
+                'image_url' => $imageUrl, 
+                'alt' => $productAlt,
+                'product_id' => $productId,
+            ];
+
+            $this->productPhotoModel->save($data);
+
+            return $this->response->setJSON([
+                'status' => 'success',
+                'productId' => $productId,
+                'filePath' => $imageUrl,
+            ]);
+        }
+
     }
 }

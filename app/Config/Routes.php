@@ -18,8 +18,12 @@ $routes->group('admin', static function ($routes) {
         $routes->group('products', static function ($routes) {
             $routes->get('/', 'Admin\Products\ProductsController::index');
             $routes->post('/', 'Admin\Products\ProductsController::create');
-            $routes->get('(:num)', 'Admin\Products\ProductsController::edit/$1');
+            $routes->get('(:num)', 'Admin\Products\ProductsController::details/$1');
             $routes->post('(:num)', 'Admin\Products\ProductsController::saveChanges');
+
+            $routes->group('photo', static function ($routes) {
+                $routes->post('/', 'Admin\Products\ProductsController::addPhoto');
+            });
             
             $routes->group('remove', static function ($routes) {
                 $routes->get('(:num)', 'Admin\Products\ProductsController::remove/$1');

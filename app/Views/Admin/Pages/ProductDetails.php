@@ -38,19 +38,13 @@
         <span>В розробці: </span>
         <hr>
 
-        <div class="d-flex flex-wrap mb-3">
-            <div class="image-tile position-relative">
-                <img src="image1.jpg" alt="Image 1" class="img-fluid">
-                <button class="delete-btn">×</button>
-            </div>
-            <div class="image-tile position-relative">
-                <img src="image2.jpg" alt="Image 2" class="img-fluid">
-                <button class="delete-btn">×</button>
-            </div>
-            <div class="image-tile position-relative">
-                <img src="image3.jpg" alt="Image 3" class="img-fluid">
-                <button class="delete-btn">×</button>
-            </div>
+        <div id="photo_list" class="d-flex flex-wrap mb-3">
+            <?php foreach($photos as $photoItem): ?>
+                <div class="image-tile position-relative">
+                    <img src="<?=$photoItem['image_url'];?>" data-photo-id="<?=$photoItem['photo_id'];?>" class="img-fluid">
+                    <button class="delete-btn">×</button>
+                </div>
+            <?php endforeach; ?>
         </div>
 
         <div class="form-group d-flex flex-column mb-3">
@@ -62,13 +56,16 @@
             <img src="#" id="selected_image" width="100" height="100">
             <button id="remove_image-btn" type="button" class="delete-btn">×</button>
         </div>
+        <input type="text" id="image_alt">
         <button id="upload_image-btn" type="button" class="btn btn-primary hidden">Завантажити зображення</button>
 
         <button type="submit" class="btn btn-primary">Зберегти</button>
     </form>
 </section>
 <script>
+    const $photoList = document.querySelector('#photo_list');
     const $photoLoader = document.querySelector('#upload_image');
+    const $imageAlt = document.querySelector('#image_alt');
     const $selectedImage = document.querySelector('#selected_image');
     const $uploadImageBtn = document.querySelector('#upload_image-btn');
 
@@ -99,8 +96,34 @@
         let formData = new FormData();
 
         formData.append('image', $photoLoader.files[0]);
-        fetch('<?=base_url('upload/image');?>', {
-            method: "POST", body: formData
+        formData.set('alt', $imageAlt.value);
+        formData.set('product_id', <?=$product['product_id'];?>);
+
+        fetch('<?=base_url('admin/products/photo');?>', {
+            method: "POST", 
+            body: formData,
+        }).then(response => response.json()).then(function (data) {
+            if (data.status !== 'success') {
+                return false;
+            }     
+
+            document.querySelector('#uploaded_box').classList.add('hidden');
+            $uploadImageBtn.classList.add('hidden');
+
+            $photoLoader.value = '';
+            $selectedImage.setAttribute('src', '#');
+
+            const $photoItem = document.createElement('div');
+
+            $photoItem.classList.add('image-tile', 'position-relative')
+
+            let HTML = `
+                <img src="${data.filePath}" data-photo-id="${data.productId}" class="img-fluid">
+                <button class="delete-btn">×</button>
+            `;
+            $photoItem.innerHTML = HTML
+
+            $photoList.append($photoItem);
         });
     })
 
