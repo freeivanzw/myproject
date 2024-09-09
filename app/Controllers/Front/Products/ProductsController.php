@@ -22,6 +22,14 @@ class ProductsController extends FrontController
     {
         $products = $this->productModel->orderBy('created_at', 'DESC')->paginate(8);
 
+        foreach($products as &$product) {
+            $result =  $this->productPhotoModel
+                ->select('image_url')
+                ->where('product_id', $product['product_id'])
+                ->first();
+            $product['image'] = $result['image_url'] ?? '';
+        }
+
         $data = [
             'selectedPage' => 'products',
             'products' => $products,

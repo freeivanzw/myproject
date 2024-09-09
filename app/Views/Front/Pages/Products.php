@@ -6,13 +6,13 @@
     <div class="container px-4 px-lg-5 ">
         <div class="h1 text-center mb-5">Каталог товарів</div>
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-start">
-            <?php foreach($products as $product): ?>
+            <?php foreach($products as $id => $product): ?>
                 <div class="col mb-5">
                     <div class="card h-100">
                         <!-- Product image-->
                         <a href="<?=base_url('products/' . $product['product_id']);?>">
-                            <?php if ($product['main_photo']): ?>
-                                <img class="card-img-top" src="<?=base_url('uploads/products-photo/' . $product['product_id'] . '/'. $product['main_photo']);?>" style="aspect-ratio: 1 / 1; object-fit: cover;" alt="<?=$product['name'];?>">
+                            <?php if ($product['image']): ?>
+                                <img class="card-img-top" src="<?=$product['image'];?>" style="aspect-ratio: 1 / 1; object-fit: cover;" alt="<?=$product['name'];?>">
                             <?php else: ?>
                                 <img class="card-img-top" src="<?=base_url('images/no-photo.jpg');?>" style="aspect-ratio: 1 / 1; object-fit: cover;" alt="<?=$product['name'];?>">
                             <?php endif;?>
