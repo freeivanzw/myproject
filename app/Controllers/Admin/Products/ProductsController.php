@@ -178,6 +178,7 @@ class ProductsController extends AdminController
                 'image_url' => $imageUrl, 
                 'alt' => $productAlt,
                 'product_id' => $productId,
+                'image_name' => $newName,
             ];
 
             $this->productPhotoModel->save($data);
@@ -188,6 +189,33 @@ class ProductsController extends AdminController
                 'filePath' => $imageUrl,
             ]);
         }
+    }
 
+    public function removePhoto()
+    {
+        $productId = $this->request->getGet('productId');
+        $photoId = $this->request->getGet('photoId');
+
+        $photo = $this->productPhotoModel
+            ->where('product_id', $productId)
+            ->where('photo_id', $photoId)
+            ->find();
+
+        if (!$photo) {
+            return $this->response->setJSON([
+                'success' => false,
+                'message' => 'this photo not found',
+            ]);
+        }
+        
+        $photoPath = 'uploads/product-images/' . $photo[0]['product_id'] . '/' . $photo[0]['image_name'];
+        
+        unlink($photoPath);
+
+        $this->productPhotoModel->delete($photo[0]['photo_id']);
+        
+        return $this->response->setJSON([
+            'success' => true,
+        ]);;
     }
 }

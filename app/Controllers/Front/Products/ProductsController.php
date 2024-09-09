@@ -4,14 +4,17 @@ namespace App\Controllers\Front\Products;
 
 use App\Controllers\Front\FrontController;
 use App\Models\ProductModel;
+use App\Models\ProductPhotoModel;
 
 class ProductsController extends FrontController
 {
-    public ProductModel $productModel;
+    protected ProductModel $productModel;
+    protected ProductPhotoModel $productPhotoModel;
 
     public function __construct()
     {
         $this->productModel = new ProductModel();
+        $this->productPhotoModel = new ProductPhotoModel();
     }
 
 
@@ -31,10 +34,15 @@ class ProductsController extends FrontController
     public function details (int $id) : string
     {
         $product = $this->productModel->find($id);
+        $photos = $this->productPhotoModel
+            ->select(['image_url', 'alt'])
+            ->where('product_id', $id)
+            ->findAll();
         
         $data = [
             'selectedPage' => 'products',
             'product' => $product,
+            'photos' => $photos,
         ];
 
         return view('Front/Pages/ProductsDetails', $data);

@@ -41,8 +41,8 @@
         <div id="photo_list" class="d-flex flex-wrap mb-3">
             <?php foreach($photos as $photoItem): ?>
                 <div class="image-tile position-relative">
-                    <img src="<?=$photoItem['image_url'];?>" data-photo-id="<?=$photoItem['photo_id'];?>" class="img-fluid">
-                    <button class="delete-btn">×</button>
+                    <img src="<?=$photoItem['image_url'];?>"class="img-fluid">
+                    <button type="button" class="delete-btn" data-photo-id="<?=$photoItem['photo_id'];?>" >×</button>
                 </div>
             <?php endforeach; ?>
         </div>
@@ -63,6 +63,7 @@
     </form>
 </section>
 <script>
+    const $productId = <?=$product['product_id'];?>;
     const $photoList = document.querySelector('#photo_list');
     const $photoLoader = document.querySelector('#upload_image');
     const $imageAlt = document.querySelector('#image_alt');
@@ -97,7 +98,7 @@
 
         formData.append('image', $photoLoader.files[0]);
         formData.set('alt', $imageAlt.value);
-        formData.set('product_id', <?=$product['product_id'];?>);
+        formData.set('product_id', $productId);
 
         fetch('<?=base_url('admin/products/photo');?>', {
             method: "POST", 
@@ -118,13 +119,37 @@
             $photoItem.classList.add('image-tile', 'position-relative')
 
             let HTML = `
-                <img src="${data.filePath}" data-photo-id="${data.productId}" class="img-fluid">
-                <button class="delete-btn">×</button>
+                <img src="${data.filePath}" class="img-fluid">
+                <button class="delete-btn" data-photo-id="${data.productId}">×</button>
             `;
             $photoItem.innerHTML = HTML
 
             $photoList.append($photoItem);
         });
+    })
+
+    const $deleteBtns = document.querySelectorAll('.delete-btn');
+
+    $deleteBtns.forEach(function ($btn) {
+        
+        $btn.addEventListener('click', function () {
+            const formData = {
+                productId: $productId,
+                photoId: $btn.getAttribute('data-photo-id'),
+            };
+
+            fetch(`<?=base_url('admin/products/photo');?>?productId=${$productId}&photoId=${$btn.getAttribute('data-photo-id')}`, {
+                method: "DELETE", 
+            }).then(response => response.json()).then(function (data) {
+                if (!data.success) {
+                    return false;
+                }
+
+                $btn.parentElement.remove();
+
+            });
+
+        })
     })
 
 </script>

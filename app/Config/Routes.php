@@ -23,6 +23,7 @@ $routes->group('admin', static function ($routes) {
 
             $routes->group('photo', static function ($routes) {
                 $routes->post('/', 'Admin\Products\ProductsController::addPhoto');
+                $routes->delete('/', 'Admin\Products\ProductsController::removePhoto');
             });
             
             $routes->group('remove', static function ($routes) {

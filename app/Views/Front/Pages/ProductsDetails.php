@@ -4,7 +4,15 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-6">
-            <img src="<?=base_url('uploads/products-photo/' . $product['product_id'] . '/' . $product['main_photo']);?>" alt="<?= $product['name']; ?>" class="img-fluid">
+            <div class="row d-flex flex-wrap">
+                <?php foreach($photos as $photo): ?>
+                    <div class="col-6 mb-4 product_details-image">
+                        <div class="card">
+                            <img src="<?=$photo['image_url'];?>" alt="<?=$photo['alt'];?>" class="img-fluid card-img-top" style="height: 200px; object-fit: contain;">
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
         </div>
         <div class="col-md-6">
             <h2 class="mb-3"><?= $product['name']; ?></h2>

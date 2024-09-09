@@ -26,3 +26,11 @@ body {
     height: auto !important;
     aspect-ratio: 4 / 2;
 }
+
+.product_details-image:nth-child(1) {
+    width: 100%;
+}
+
+.product_details-image:nth-child(1) img {
+    height: 400px !important;
+}

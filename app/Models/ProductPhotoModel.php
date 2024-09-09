@@ -11,7 +11,7 @@ class ProductPhotoModel extends Model
 
     protected $useAutoIncrement = true;
 
-    protected $allowedFields = ['image_url', 'alt', 'created_at', 'updated_at', 'product_id'];
+    protected $allowedFields = ['image_url', 'image_name', 'alt', 'created_at', 'updated_at', 'product_id'];
 
     protected $useTimestamps = true;
     protected $dateFormat    = 'datetime';
