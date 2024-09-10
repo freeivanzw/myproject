@@ -123,36 +123,19 @@ class ProductsController extends AdminController
             throw new PageNotFoundException('Product does not exist');
         }
 
-        $this->removeMainPhoto($id);
+        $photos = $this->productPhotoModel->where('product_id', $product['product_id'])->findAll();
+
+        foreach ($photos as $photoItem) {
+            $dirPath = FCPATH . 'uploads/product-images/' . $photoItem['product_id'] . '/' . $photoItem['image_name'];
+
+            unlink($dirPath);
+
+            $this->productPhotoModel->delete($photoItem['photo_id']);
+        }
+
         $this->productModel->delete($id);
 
         return redirect('admin/products');
-    }
-
-    /**
-     * @param int
-     */
-    public function removeMainPhoto(int $productId)
-    {
-        if (empty($productId)) {
-            throw new PageNotFoundException('productId must been not null');
-        }
-
-        $product = $this->productModel->find($productId);
-
-        if (!$product) {
-            throw new PageNotFoundException('product id not found');
-        }
-
-        $fielPath = 'uploads/products-photo/' . $product['product_id'] . '/' . $product['main_photo'];
-        if (file_exists($fielPath)) {
-            unlink($fielPath);
-        }
-
-        $product['main_photo'] = null;
-        $this->productModel->save($product);
-
-        return redirect()->back();
     }
 
     public function addPhoto()
@@ -191,10 +174,8 @@ class ProductsController extends AdminController
         }
     }
 
-    public function removePhoto()
+    public function removePhoto(int $productId, int $photoId)
     {
-        $productId = $this->request->getGet('productId');
-        $photoId = $this->request->getGet('photoId');
 
         $photo = $this->productPhotoModel
             ->where('product_id', $productId)

@@ -22,22 +22,6 @@
             <input type="number" class="form-control" id="price" name="price" value="<?= esc($product['price']) ?>">
         </div>
 
-        <div class="form-group mb-3">
-            <?php if ($product['main_photo']): ?>
-                <div class="selected_photo">
-                    <img src="<?= base_url('uploads/products-photo/' . $product['product_id'] . '/' . $product['main_photo']) ?>" alt="Product Image" class="img-thumbnail mt-2" width="150">
-                    <a href="<?= base_url('admin/products/remove/mainPhoto/' . $product['product_id']) ?>"><?=lang('App.delete');?></a>
-                </div>
-            <?php else: ?>
-                <label for="image">Зображення</label>
-                <input type="file" class="form-control-file" id="image" name="image">
-            <?php endif; ?>
-        </div>
-
-        <hr>
-        <span>В розробці: </span>
-        <hr>
-
         <div id="photo_list" class="d-flex flex-wrap mb-3">
             <?php foreach($photos as $photoItem): ?>
                 <div class="image-tile position-relative">
@@ -46,18 +30,20 @@
                 </div>
             <?php endforeach; ?>
         </div>
-
+        
         <div class="form-group d-flex flex-column mb-3">
             <label for="image">Завантажити зображення</label>
             <input type="file" class="form-control-file" id="upload_image">
         </div>
 
-        <div id="uploaded_box" class="image-tile position-relative hidden">
-            <img src="#" id="selected_image" width="100" height="100">
-            <button id="remove_image-btn" type="button" class="delete-btn">×</button>
+        <div class="upload_image-box hidden">
+            <div id="uploaded_box" class="image-tile position-relative">
+                <img src="#" id="selected_image" width="100" height="100">
+                <button id="remove_image-btn" type="button" class="delete-btn">×</button>
+            </div>
+            <input type="text" id="image_alt" placeholder="alt">
+            <button id="upload_image-btn" type="button" class="btn btn-primary">Завантажити зображення</button>
         </div>
-        <input type="text" id="image_alt">
-        <button id="upload_image-btn" type="button" class="btn btn-primary hidden">Завантажити зображення</button>
 
         <button type="submit" class="btn btn-primary">Зберегти</button>
     </form>
@@ -81,13 +67,11 @@
 
         reader.readAsDataURL(selectedFile);
 
-        document.querySelector('#uploaded_box').classList.remove('hidden');
-        $uploadImageBtn.classList.remove('hidden')
+        document.querySelector('.upload_image-box').classList.remove('hidden');
     })
 
     document.querySelector('#uploaded_box').addEventListener('click', function () {
-        document.querySelector('#uploaded_box').classList.add('hidden');
-        $uploadImageBtn.classList.add('hidden');
+        document.querySelector('.upload_image-box').classList.remove('hidden');
 
         $photoLoader.value = '';
         $selectedImage.setAttribute('src', '#');
@@ -108,10 +92,10 @@
                 return false;
             }     
 
-            document.querySelector('#uploaded_box').classList.add('hidden');
-            $uploadImageBtn.classList.add('hidden');
+            document.querySelector('.upload_image-box').classList.add('hidden');
 
             $photoLoader.value = '';
+            $imageAlt.value = '';
             $selectedImage.setAttribute('src', '#');
 
             const $photoItem = document.createElement('div');
@@ -138,7 +122,7 @@
                 photoId: $btn.getAttribute('data-photo-id'),
             };
 
-            fetch(`<?=base_url('admin/products/photo');?>?productId=${$productId}&photoId=${$btn.getAttribute('data-photo-id')}`, {
+            fetch(`<?=base_url('admin/products/photo');?>/${$productId}/${$btn.getAttribute('data-photo-id')}`, {
                 method: "DELETE", 
             }).then(response => response.json()).then(function (data) {
                 if (!data.success) {

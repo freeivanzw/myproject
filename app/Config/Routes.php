@@ -23,14 +23,10 @@ $routes->group('admin', static function ($routes) {
 
             $routes->group('photo', static function ($routes) {
                 $routes->post('/', 'Admin\Products\ProductsController::addPhoto');
-                $routes->delete('/', 'Admin\Products\ProductsController::removePhoto');
+                $routes->delete('(:num)/(:num)', 'Admin\Products\ProductsController::removePhoto/$1/$2');
             });
             
-            $routes->group('remove', static function ($routes) {
-                $routes->get('(:num)', 'Admin\Products\ProductsController::remove/$1');
-                
-                $routes->get('mainPhoto/(:num)',  'Admin\Products\ProductsController::removeMainPhoto/$1');
-            });
+            $routes->get('remove/(:num)', 'Admin\Products\ProductsController::remove/$1');
         });
 
         $routes->group('news', static function ($routes) {
