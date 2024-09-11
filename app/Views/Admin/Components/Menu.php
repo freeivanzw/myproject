@@ -6,6 +6,9 @@
         <a href="<?=base_url('admin/products');?>" class="btn btn-secondary px-3">Продукти</a>
     </li>
     <li>
+        <a href="<?=base_url('admin/categories');?>" class="btn btn-secondary px-3">Категорії</a>
+    </li>
+    <li>
         <a href="<?=base_url('admin/news');?>" class="btn btn-secondary px-3">Новини</a>
     </li>
     <li>

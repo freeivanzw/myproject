@@ -22,6 +22,14 @@
             <input type="number" class="form-control" id="price" name="price" value="<?= esc($product['price']) ?>">
         </div>
 
+        <span>Категорії</span>
+        <br>
+        <select name="select">
+            <option value="value1">категорія 1</option>
+            <option value="value1">категорія 2</option>
+            <option value="value1">категорія 3</option>
+        </select>
+
         <div id="photo_list" class="d-flex flex-wrap mb-3">
             <?php foreach($photos as $photoItem): ?>
                 <div class="image-tile position-relative">

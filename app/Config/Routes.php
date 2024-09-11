@@ -29,6 +29,11 @@ $routes->group('admin', static function ($routes) {
             $routes->get('remove/(:num)', 'Admin\Products\ProductsController::remove/$1');
         });
 
+        $routes->group('categories', static function ($routes) {
+            $routes->get('/', 'Admin\Category\CategoryController::list');
+            $routes->post('/', 'Admin\Category\CategoryController::create');
+        });
+
         $routes->group('news', static function ($routes) {
             $routes->get('/', 'Admin\News\NewsController::list');
             $routes->post('/', 'Admin\News\NewsController::create');
