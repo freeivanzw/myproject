@@ -32,6 +32,8 @@ $routes->group('admin', static function ($routes) {
         $routes->group('categories', static function ($routes) {
             $routes->get('/', 'Admin\Category\CategoryController::list');
             $routes->post('/', 'Admin\Category\CategoryController::create');
+            $routes->post('edit', 'Admin\Category\CategoryController::edit');
+            $routes->delete('(:num)', 'Admin\Category\CategoryController::delete/$1');
         });
 
         $routes->group('news', static function ($routes) {

@@ -24,10 +24,14 @@
 
         <span>Категорії</span>
         <br>
-        <select name="select">
-            <option value="value1">категорія 1</option>
-            <option value="value1">категорія 2</option>
-            <option value="value1">категорія 3</option>
+
+        <select name="category">
+            <?php if(!$product['category_id']): ?>
+                <option value="" selected disabled>Вибрати категорію</option>
+            <?php endif; ?>
+            <?php foreach($categories as $category): ?>
+                <option value="<?=$category['category_id'];?>" <?=$product['category_id'] === $category['category_id'] ? 'selected' : '' ; ?>><?=$category['name'];?></option>
+            <?php endforeach; ?>
         </select>
 
         <div id="photo_list" class="d-flex flex-wrap mb-3">

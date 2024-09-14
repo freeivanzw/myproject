@@ -3,6 +3,7 @@
 namespace App\Controllers\Admin\Products;
 
 use App\Controllers\Admin\AdminController;
+use App\Models\CategoryModel;
 use App\Models\ProductModel;
 use App\Models\ProductPhotoModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
@@ -11,11 +12,13 @@ class ProductsController extends AdminController
 {
     protected ProductModel $productModel;
     protected ProductPhotoModel $productPhotoModel;
+    protected CategoryModel $categoryModel;
 
     public function __construct()
     {
         $this->productModel = new ProductModel();
         $this->productPhotoModel = new ProductPhotoModel();
+        $this->categoryModel = new CategoryModel();
     }
 
     public function index()
@@ -57,6 +60,7 @@ class ProductsController extends AdminController
         $data = [
             'product' => $product,
             'photos' => $photos,
+            'categories' => $this->categoryModel->select('category_id, name')->findAll(),
         ];
 
         return view('Admin/Pages/ProductDetails', $data);
@@ -105,6 +109,10 @@ class ProductsController extends AdminController
             $img->move($dirPath, $fileName, true);
 
             $updateData['main_photo'] = $fileName;
+        }
+
+        if (isset($form['category'])) {
+            $updateData['category_id'] = $form['category'];
         }
 
         $this->productModel->update($product['product_id'], $updateData);
