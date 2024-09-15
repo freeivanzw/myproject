@@ -52,6 +52,6 @@ tr.editing .coategory_name-wrap form {
   display: block;
 }
 
-tr.editing .coategory_name-wrap span {
+tr.editing .coategory_name-wrap > span {
   display: none;
 }

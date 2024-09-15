@@ -30,6 +30,7 @@ class CategoryController extends AdminController
     {
         $this->categoryModel->save([
             'name' => '',
+            'image' => '',
         ]);
         
         return redirect()->back();
@@ -46,6 +47,42 @@ class CategoryController extends AdminController
         }
 
         $category['name'] = $this->request->getPost('name');
+
+        $image = $this->request->getFile('image');
+
+        if ($image) {
+            $dirPath = FCPATH . 'uploads/category-photo/' . $category['category_id'];
+
+            if (!is_dir($dirPath)) {
+                mkdir($dirPath, 0777, true);
+            }
+
+            $fileName = $image->getRandomName();
+            $image->move($dirPath, $fileName, true);
+
+            $category['image'] = $fileName;
+        }
+
+        $this->categoryModel->save($category);
+
+        return redirect()->back();
+    }
+
+    public function removePhoto(int $id)
+    {
+        $category = $this->categoryModel->find($id);
+
+        if (!$category && !isset($category['image'])) {
+            throw new FileNotFoundException('id not found');
+        }
+
+        $dirPath = FCPATH . 'uploads/category-photo/' . $category['category_id'];
+        $filePath = $dirPath . '/' . $category['image'];
+
+        unlink($filePath);
+        rmdir($dirPath);
+
+        $category['image'] = '';
 
         $this->categoryModel->save($category);
 

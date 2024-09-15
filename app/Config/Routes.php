@@ -33,6 +33,7 @@ $routes->group('admin', static function ($routes) {
             $routes->get('/', 'Admin\Category\CategoryController::list');
             $routes->post('/', 'Admin\Category\CategoryController::create');
             $routes->post('edit', 'Admin\Category\CategoryController::edit');
+            $routes->get('remove-photo/(:num)', 'Admin\Category\CategoryController::removePhoto/$1');
             $routes->delete('(:num)', 'Admin\Category\CategoryController::delete/$1');
         });
 

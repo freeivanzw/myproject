@@ -10,6 +10,7 @@
         <thead>
             <tr>
                 <th scope="col" style="width:100px;">Id</th>
+                <th scope="col" style="width:200px;">Зображення</th>
                 <th scope="col">Назва</th>
                 <th scope="col" style="width:130px;">Редагувати</th>
                 <th scope="col" style="width:130px;">Видалити</th>
@@ -19,11 +20,26 @@
             <?php foreach ($categories as $category): ?>
                 <tr>
                     <th style="width:100px;"><?=$category['category_id'];?></th>
+                    <th style="width:200px;">
+                        <?php if (!$category['image']): ?>
+                            <img src="<?=base_url('images/no-photo.jpg');?>" width="100" height="100" alt="not found">
+                        <?php else: ?>
+                            <img src="<?=base_url('uploads/category-photo/' . $category['category_id'] . '/' . $category['image']);?>" width="100" height="100" alt="category photo">
+                            <a href="<?=base_url('admin/categories/remove-photo/' . $category['category_id']);?>">[X]</a>
+                        <?php endif; ?>
+                    </th>
                     <td class="coategory_name-wrap">
                         <span><?=$category['name'];?></span>
-                        <form method="post" action="<?=base_url('admin/categories/edit');?>">
+                        <form method="post" action="<?=base_url('admin/categories/edit');?>" enctype="multipart/form-data">
                             <input type="hidden" name="id" value="<?=$category['category_id'];?>">
+                            <span>Назва</span>
+                            <br>
                             <input type="text" name="name" value="<?=$category['name'];?>">
+                            <br>
+                            <span>Зображення</span>
+                            <br>
+                            <input type="file" name="image">
+                            <br>
                             <button>Зберегти</button>
                         </form>
                     </td>
