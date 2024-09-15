@@ -18,14 +18,14 @@
         <div class="h2 text-center mb-5">Категорії товарів</div>
         <div class="row gx-5">
             <?php foreach ($categories as $categoryItem): ?>
-                <div class="col-lg-3 mb-5 mb-lg-0 d-flex flex-column justify-content-center align-items-center">
+                <a href="<?= base_url('products?category-id=' . $categoryItem['category_id']); ?>" class="col-lg-3 mb-5 mb-lg-0 d-flex flex-column justify-content-center align-items-center">
                     <?php if (empty($categoryItem['image'])): ?>
                         <img src="<?= base_url('images/no-photo.jpg'); ?>" class="img-fluid mb-2" style="width: 100px; height: 100px; object-fit: cover;" alt="<?= $categoryItem['name']; ?>">
                     <?php else: ?>
                         <img src="<?= base_url('uploads/category-photo/' . $categoryItem['category_id'] . '/' . $categoryItem['image']); ?>" class="img-fluid mb-2" style="width: 100px; height: 100px; object-fit: cover;" alt="<?= $categoryItem['name']; ?>">
                     <?php endif; ?>
                     <h2 class="h4 fw-bolder"><?= $categoryItem['name']; ?></h2>
-                </div>
+                </a>
             <?php endforeach; ?>
         </div>
     </div>
