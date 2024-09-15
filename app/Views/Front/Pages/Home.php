@@ -15,11 +15,28 @@
 </div>
 <section class="py-5 border-bottom" id="features">
     <div class="container my-5">
+        <div class="h2 text-center mb-5">Категорії товарів</div>
+        <div class="row gx-5">
+            <?php foreach ($categories as $categoryItem): ?>
+                <div class="col-lg-3 mb-5 mb-lg-0 d-flex flex-column justify-content-center align-items-center">
+                    <?php if (empty($categoryItem['image'])): ?>
+                        <img src="<?= base_url('images/no-photo.jpg'); ?>" class="img-fluid mb-2" style="width: 100px; height: 100px; object-fit: cover;" alt="<?= $categoryItem['name']; ?>">
+                    <?php else: ?>
+                        <img src="<?= base_url('uploads/category-photo/' . $categoryItem['category_id'] . '/' . $categoryItem['image']); ?>" class="img-fluid mb-2" style="width: 100px; height: 100px; object-fit: cover;" alt="<?= $categoryItem['name']; ?>">
+                    <?php endif; ?>
+                    <h2 class="h4 fw-bolder"><?= $categoryItem['name']; ?></h2>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+<section class="py-5 border-bottom" id="features">
+    <div class="container my-5">
         <div class="h2 text-center mb-5">Наші переваги</div>
         <div class="row gx-5">
             <?php foreach ($advantages as $advantageItem): ?>
-                <div class="col-lg-4 mb-5 mb-lg-0">
-                    <img src="<?= base_url('uploads/advantage-photo/' . $advantageItem['advantage_id'] . '/' . $advantageItem['image']); ?>" class="img-fluid mb-2" style="width: 100px; height: 100px; object-fit: cover;" alt="<?= $advantageItem['title']; ?>">
+                <div class="col-lg-4 mb-5 mb-lg-0 d-flex flex-column justify-content-center align-items-center">
+                    <img src="<?= base_url('uploads/advantage-photo/' . $advantageItem['advantage_id'] . '/' . $advantageItem['image']); ?>" class="img-fluid mb-2" style="width: 200px; height: 200px; object-fit: cover;" alt="<?= $advantageItem['title']; ?>">
                     <h2 class="h4 fw-bolder"><?= $advantageItem['title']; ?></h2>
                     <p><?= $advantageItem['description']; ?></p>
                 </div>
