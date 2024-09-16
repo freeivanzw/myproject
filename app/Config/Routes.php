@@ -10,6 +10,8 @@ $routes->group('admin', static function ($routes) {
     $routes->group('/', ['filter' => 'adminAuth'], static function ($routes) {
         $routes->get('/', 'Admin\Home\HomeController::index');
 
+        $routes->post('upload', 'Admin\File\FileController::upload');
+
         $routes->group('auth', static function ($routes) {
             $routes->get('logout', 'Admin\Auth\AuthController::logout');
             $routes->post('register', 'Admin\Auth\AuthController::register');

@@ -19,10 +19,16 @@
 
         <div class="form-group mb-3">
             <label for="price">Текст</label>
-            <textarea class="form-control" id="news_text" name="news_text"><?= esc($news['news_text']) ?></textarea>
+            <textarea class="form-control" id="editor1" name="news_text"><?= esc($news['news_text']) ?></textarea>
         </div>
 
         <button type="submit" class="btn btn-primary">Зберегти</button>
     </form>
 </section>
+<script src="<?=base_url('admin/ckeditor/ckeditor.js');?>"></script>
+<script>
+    CKEDITOR.replace('editor1', {
+        filebrowserImageUploadUrl: '<?= base_url('admin/upload') ?>',
+    });
+</script>
 <?= $this->endSection(); ?>
