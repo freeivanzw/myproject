@@ -22,7 +22,7 @@ class NewsController extends AdminController
     public function list(): string
     {
         $data = [
-            'news' => $this->newsModel->orderBy('updated_at', 'DESC')->findAll(),
+            'news' => $this->newsModel->orderBy('created_at', 'DESC')->findAll(),
         ];
 
         return view('Admin/Pages/News', $data);

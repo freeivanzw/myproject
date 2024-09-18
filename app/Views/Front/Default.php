@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyProject</title>
+    <title>MyFireStore</title>
 
     <link rel="apple-touch-icon" sizes="180x180" href="<?=base_url('favicon/apple-touch-icon.png');?>">
     <link rel="icon" type="image/png" sizes="32x32" href="<?=base_url('favicon/favicon-32x32.png');?>">

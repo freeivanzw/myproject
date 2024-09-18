@@ -23,7 +23,7 @@ class ProductsController extends AdminController
 
     public function index()
     {
-        $products = $this->productModel->orderBy('updated_at', 'DESC')->findAll();
+        $products = $this->productModel->orderBy('created_at', 'DESC')->findAll();
 
         $data = [
             'products' => $products,
