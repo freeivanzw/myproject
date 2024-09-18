@@ -44,4 +44,24 @@
         </div>
     </div>
 </section>
+<section class="py-5 border-bottom" >
+    <div class="container my-5">
+        <div class="h2 text-center mb-5">Останні новини</div>
+        <div class="row gx-4 gx-lg-5">
+            <?php foreach ($news as $newsItem): ?>
+                <div class="col-md-4 mb-5">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h2 class="card-title"><?=$newsItem['title'];?></h2>
+                            <p class="card-text"><?=$newsItem['description'];?></p>
+                        </div>
+                        <div class="card-footer"><a class="btn btn-primary btn-sm" href="<?=base_url('news/' . $newsItem['news_id']);?>"><?=lang('App.details');?></a></div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        <a href="<?=base_url('news');?>">Переглянути більше</a>
+    </div>
+</section>
+
 <?= $this->endSection(); ?>
