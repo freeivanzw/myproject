@@ -25,10 +25,10 @@
         <button type="submit" class="btn btn-primary">Зберегти</button>
     </form>
 </section>
-<script src="<?=base_url('admin/ckeditor/ckeditor.js');?>"></script>
+<script src="<?=base_url('js/plugins/ckeditor/ckeditor.js');?>"></script>
 <script>
     CKEDITOR.replace('editor1', {
-        filebrowserImageUploadUrl: '<?= base_url('admin/upload') ?>',
+        filebrowserImageUploadUrl: '<?= base_url('admin/news/' . $news['news_id'] . '/image?type=Images') ?>',
     });
 </script>
 <?= $this->endSection(); ?>
