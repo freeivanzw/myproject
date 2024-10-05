@@ -17,4 +17,13 @@ class ProductModel extends Model
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
+
+    public function getWithPhoto()
+    {
+        return $this->db->table('Products')
+                        ->where('Products.product_id', 53)
+                        ->join('Product_Photos', 'Products.product_id = Product_Photos.product_id', 'left')
+                        ->get()
+                        ->getResult();
+    }
 }

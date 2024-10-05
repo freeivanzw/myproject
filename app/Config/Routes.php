@@ -92,3 +92,4 @@ $routes->group('contacts', static function ($routes) {
     $routes->get('/', 'Front\Contacts\ContactsController::index');
 });
 
+$routes->get('test', 'Front\TestController::index');
