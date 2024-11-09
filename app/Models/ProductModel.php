@@ -26,4 +26,6 @@ class ProductModel extends Model
                         ->get()
                         ->getResult();
     }
+
+
 }
